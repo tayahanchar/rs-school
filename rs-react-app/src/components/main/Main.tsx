@@ -14,7 +14,18 @@ interface IPokemon {
 }
 
 class Main extends Component<MainProps> {
+  state = {
+    fail: false,
+  };
+
+  handleErrorButtonClick = () => {
+    this.setState({ fail: true });
+  };
+
   render() {
+    if (this.state.fail) {
+      throw new Error('Error');
+    }
     return (
       <main>
         {this.props.isLoading ? (
@@ -34,7 +45,7 @@ class Main extends Component<MainProps> {
         ) : (
           <p>Nothing was found!</p>
         )}
-        <button>Throw an error</button>
+        <button onClick={this.handleErrorButtonClick}>Throw an error</button>
       </main>
     );
   }
