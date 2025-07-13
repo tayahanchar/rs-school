@@ -12,32 +12,57 @@ interface IPokemon {
 class App extends Component {
   state = {
     pokemons: [],
+    isError: false,
+    isLoading: false,
   };
 
   async componentDidMount() {
     const searchStr = localStorage.getItem('searchStr');
+
     if (searchStr) {
       this.handleSearch(searchStr);
     } else {
-      const result = await fetchData('https://pokeapi.co/api/v2/pokemon');
-      this.setState({ pokemons: result.results });
+      this.setState({ isLoading: true });
+      try {
+        const result = await fetchData('https://pokeapi.co/api/v2/pokemon');
+        this.setState({
+          pokemons: result.results,
+          isError: false,
+          isLoading: false,
+        });
+      } catch (error) {
+        console.log(error);
+        this.setState({ isError: true, isLoading: false });
+      }
     }
   }
 
   handleSearch = async (str: string) => {
     if (str.trim().length === 0) return;
+    // if (str === localStorage.getItem('searchStr')) return;
 
     localStorage.setItem('searchStr', str);
 
-    const result = await fetchData(
-      `https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`
-    );
+    this.setState({ isLoading: true });
 
-    const filtredData = result.results.filter((pokemon: IPokemon) =>
-      pokemon.name.startsWith(str.toLowerCase())
-    );
+    try {
+      const result = await fetchData(
+        `https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`
+      );
 
-    this.setState({ pokemons: filtredData });
+      const filtredData = result.results.filter((pokemon: IPokemon) =>
+        pokemon.name.startsWith(str.toLowerCase())
+      );
+
+      this.setState({
+        pokemons: filtredData,
+        isError: false,
+        isLoading: false,
+      });
+    } catch (error) {
+      console.log(error);
+      this.setState({ isError: true, isLoading: false });
+    }
   };
 
   // const pokemons = await fetchData('https://pokeapi.co/api/v2/pokemon');
@@ -72,7 +97,7 @@ class App extends Component {
     return (
       <div>
         <Header handleSearch={this.handleSearch} />
-        <Main items={this.state.pokemons} />
+        <Main items={this.state.pokemons} isError={this.state.isError} isLoading={this.state.isLoading} />
       </div>
     );
   }
