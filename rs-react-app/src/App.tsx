@@ -59,7 +59,7 @@ class App extends Component {
       const pokemonsWithDescription = await fetchPokemons(filtredData);
 
       this.setState({
-        pokemons: pokemonsWithDescription,
+        pokemons: pokemonsWithDescription
         isError: false,
         isLoading: false,
       });
