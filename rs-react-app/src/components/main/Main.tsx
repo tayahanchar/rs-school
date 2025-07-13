@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import Pokemon from '../pokemon/Pokemon';
+import './Main.css';
 
 type MainProps = {
   items: IPokemon[];
@@ -9,7 +10,7 @@ type MainProps = {
 
 interface IPokemon {
   name: string;
-  url: string;
+  description: string;
 }
 
 class Main extends Component<MainProps> {
@@ -17,13 +18,17 @@ class Main extends Component<MainProps> {
     return (
       <main>
         {this.props.isLoading ? (
-          <div>!!!!!!!!!</div>
+          <span className="loader"></span>
         ) : this.props.isError ? (
           <p>Something went wrong! Try again!</p>
         ) : this.props.items.length ? (
           <div>
             {this.props.items.map((item, index) => (
-              <Pokemon key={index} name={item.name} />
+              <Pokemon
+                key={index}
+                name={item.name}
+                description={item.description}
+              />
             ))}
           </div>
         ) : (

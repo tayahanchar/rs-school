@@ -2,6 +2,7 @@ import { Component } from 'react';
 
 interface IPokemon {
   name: string;
+  description: string;
 }
 
 class Pokemon extends Component<IPokemon> {
@@ -9,7 +10,7 @@ class Pokemon extends Component<IPokemon> {
     return (
       <div>
         <p>{this.props.name}</p>
-        <p>description</p>
+        <p>{this.props.description}</p>
       </div>
     );
   }

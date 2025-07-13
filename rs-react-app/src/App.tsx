@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/header/Header';
 import fetchData from './utils/fetchData';
 import Main from './components/main/Main';
+import fetchPokemons from './utils/fetchPokemonsWithDescription';
 
 interface IPokemon {
   name: string;
@@ -24,9 +25,11 @@ class App extends Component {
     } else {
       this.setState({ isLoading: true });
       try {
-        const result = await fetchData('https://pokeapi.co/api/v2/pokemon');
+        const pokemons = await fetchData('https://pokeapi.co/api/v2/pokemon');
+        const pokemonsWithDescription = await fetchPokemons(pokemons.results);
+
         this.setState({
-          pokemons: result.results,
+          pokemons: pokemonsWithDescription,
           isError: false,
           isLoading: false,
         });
@@ -54,8 +57,10 @@ class App extends Component {
         pokemon.name.startsWith(str.toLowerCase())
       );
 
+      const pokemonsWithDescription = await fetchPokemons(filtredData);
+
       this.setState({
-        pokemons: filtredData,
+        pokemons: pokemonsWithDescription,
         isError: false,
         isLoading: false,
       });
@@ -65,39 +70,15 @@ class App extends Component {
     }
   };
 
-  // const pokemons = await fetchData('https://pokeapi.co/api/v2/pokemon');
-
-  // const promises = pokemons.results.map(async (pokemon: IPokemon) => {
-  //   const res = await fetchData(
-  //     `https://pokeapi.co/api/v2/pokemon-species/${pokemon.name}`
-  //   );
-  //   return res;
-  // });
-
-  // const results = await Promise.allSettled(promises);
-
-  // const newPokemons = results
-  //   .filter((result) => result.status === 'fulfilled')
-  //   .map((result, index) => {
-  //     const flavor = result.value.flavor_text_entries.find(
-  //       (entry) => entry.language.name === 'en'
-  //     );
-
-  //     return {
-  //       name: pokemons[index].name,
-  //       description: flavor ? flavor.flavor_text : 'No description',
-  //     };
-  //   });
-
-  // this.setState((prev) => ({
-  //   pokemons: [...prev.pokemons, ...newPokemons],
-  // }));
-
   render() {
     return (
       <div>
         <Header handleSearch={this.handleSearch} />
-        <Main items={this.state.pokemons} isError={this.state.isError} isLoading={this.state.isLoading} />
+        <Main
+          items={this.state.pokemons}
+          isError={this.state.isError}
+          isLoading={this.state.isLoading}
+        />
       </div>
     );
   }
