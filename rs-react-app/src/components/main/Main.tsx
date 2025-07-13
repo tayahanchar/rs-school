@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import './Main.css';
-import PokemonsList from '../pokemonsList/PokemonsList';
 import type { IMain } from '../../types/types';
+import PokemonsList from '../pokemonsList/PokemonsList';
 
 class Main extends Component<IMain> {
   state = {

@@ -1,7 +1,8 @@
+import type { IFlavorTextEntries, IPokemonWithoutDescr } from '../types/types';
 import fetchData from './fetchData';
 
-const fetchPokemons = async (pokemons) => {
-  const promises = pokemons.map(async (pokemon) => {
+const fetchPokemons = async (pokemons: IPokemonWithoutDescr[]) => {
+  const promises = pokemons.map(async (pokemon: IPokemonWithoutDescr) => {
     const res = await fetchData(
       `https://pokeapi.co/api/v2/pokemon-species/${pokemon.name}`
     );
@@ -14,7 +15,7 @@ const fetchPokemons = async (pokemons) => {
     .filter((result) => result.status === 'fulfilled')
     .map((result, index) => {
       const flavor = result.value.flavor_text_entries.find(
-        (entry) => entry.language.name === 'en'
+        (entry: IFlavorTextEntries) => entry.language.name === 'en'
       );
 
       return {
@@ -22,7 +23,6 @@ const fetchPokemons = async (pokemons) => {
         description: flavor ? flavor.flavor_text : 'No description',
       };
     });
-
   return newPokemons;
 };
 

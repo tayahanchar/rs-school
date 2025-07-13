@@ -1,5 +1,10 @@
 import type { ReactNode } from 'react';
 
+export interface IPokemonWithoutDescr {
+  name: string;
+  url: string;
+}
+
 export interface IPokemonsList {
   pokemonsList: IPokemon[];
 }
@@ -30,4 +35,9 @@ export interface IErrorBoundaryProps {
 
 export interface IErrorBoundaryState {
   hasError: boolean;
+}
+
+export interface IFlavorTextEntries {
+  flavor_text: string;
+  language: { name: string; url: string };
 }

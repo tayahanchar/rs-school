@@ -4,6 +4,8 @@
 
 body {
   background-color: rgba(44, 162, 170, 0.265);
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family:
+    'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: rgba(9, 34, 35, 0.825);
 }
