@@ -9,7 +9,7 @@ class Header extends Component<IHeader> {
 
   handleInputText = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      inputText: event.target.value,
+      inputText: event.target.value.trim(),
     });
   };
 
