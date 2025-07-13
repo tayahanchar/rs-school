@@ -1,10 +1,8 @@
 import { Component } from 'react';
+import './Header.css';
+import type { IHeader } from '../../types/types';
 
-interface IComponent {
-  handleSearch: (str: string) => void;
-}
-
-class Header extends Component<IComponent> {
+class Header extends Component<IHeader> {
   state = {
     inputText: localStorage.getItem('searchStr') || '',
   };
@@ -17,15 +15,22 @@ class Header extends Component<IComponent> {
 
   render() {
     return (
-      <header>
-        <input
-          type="text"
-          value={this.state.inputText}
-          onChange={this.handleInputText}
-        />
-        <button onClick={() => this.props.handleSearch(this.state.inputText)}>
-          Search
-        </button>
+      <header className="header">
+        <h1 className="title">Pokémon App</h1>
+        <div className="content">
+          <input
+            className="input"
+            type="text"
+            value={this.state.inputText}
+            onChange={this.handleInputText}
+          />
+          <button
+            className="searchButton"
+            onClick={() => this.props.handleSearch(this.state.inputText)}
+          >
+            Search
+          </button>
+        </div>
       </header>
     );
   }

@@ -42,7 +42,6 @@ class App extends Component {
 
   handleSearch = async (str: string) => {
     if (str.trim().length === 0) return;
-    // if (str === localStorage.getItem('searchStr')) return;
 
     localStorage.setItem('searchStr', str);
 
@@ -75,7 +74,7 @@ class App extends Component {
       <div>
         <Header handleSearch={this.handleSearch} />
         <Main
-          items={this.state.pokemons}
+          pokemonsList={this.state.pokemons}
           isError={this.state.isError}
           isLoading={this.state.isLoading}
         />

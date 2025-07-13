@@ -1,19 +1,9 @@
 import { Component } from 'react';
-import Pokemon from '../pokemon/Pokemon';
 import './Main.css';
+import PokemonsList from '../pokemonsList/PokemonsList';
+import type { IMain } from '../../types/types';
 
-type MainProps = {
-  items: IPokemon[];
-  isError: boolean;
-  isLoading: boolean;
-};
-
-interface IPokemon {
-  name: string;
-  description: string;
-}
-
-class Main extends Component<MainProps> {
+class Main extends Component<IMain> {
   state = {
     fail: false,
   };
@@ -27,25 +17,19 @@ class Main extends Component<MainProps> {
       throw new Error('Error');
     }
     return (
-      <main>
+      <main className="main">
+        <button className="errorButton" onClick={this.handleErrorButtonClick}>
+          Throw an error
+        </button>
         {this.props.isLoading ? (
           <span className="loader"></span>
         ) : this.props.isError ? (
-          <p>Something went wrong! Try again!</p>
-        ) : this.props.items.length ? (
-          <div>
-            {this.props.items.map((item, index) => (
-              <Pokemon
-                key={index}
-                name={item.name}
-                description={item.description}
-              />
-            ))}
-          </div>
+          <p className="error-text">Something went wrong! Try again!</p>
+        ) : this.props.pokemonsList.length ? (
+          <PokemonsList pokemonsList={this.props.pokemonsList} />
         ) : (
-          <p>Nothing was found!</p>
+          <p className="error-text">Nothing was found!</p>
         )}
-        <button onClick={this.handleErrorButtonClick}>Throw an error</button>
       </main>
     );
   }

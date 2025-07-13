@@ -1,16 +1,13 @@
 import { Component } from 'react';
-
-interface IPokemon {
-  name: string;
-  description: string;
-}
+import type { IPokemon } from '../../types/types';
+import './Pokemon.css';
 
 class Pokemon extends Component<IPokemon> {
   render() {
     return (
-      <div>
-        <p>{this.props.name}</p>
-        <p>{this.props.description}</p>
+      <div className="pokemon">
+        <p className="pokemon-name">{this.props.name}</p>
+        <p className="pokemon-description">{this.props.description}</p>
       </div>
     );
   }

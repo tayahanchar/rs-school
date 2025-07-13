@@ -1,20 +1,20 @@
-import React, { Component, type ReactNode } from 'react';
+import { Component } from 'react';
+import type {
+  IErrorBoundaryProps,
+  IErrorBoundaryState,
+} from '../../types/types';
+import './ErrorBoundary.css';
 
-interface Props {
-  children: ReactNode;
-}
-
-interface State {
-  hasError: boolean;
-}
-
-class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
+class ErrorBoundary extends Component<
+  IErrorBoundaryProps,
+  IErrorBoundaryState
+> {
+  constructor(props: IErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(): State {
+  static getDerivedStateFromError(): IErrorBoundaryState {
     return { hasError: true };
   }
 
@@ -24,7 +24,11 @@ class ErrorBoundary extends Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return <h2>Something went wrong. Please try to reload the page.</h2>;
+      return (
+        <h1 className="error-title">
+          Something went wrong. Please try to reload the page.
+        </h1>
+      );
     }
 
     return this.props.children;
